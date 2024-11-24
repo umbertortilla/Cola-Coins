@@ -1,0 +1,514 @@
+<html><head><base href="." />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ColaTeam Store</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<style>
+    :root {
+        --primary-color: #1b2838;
+        --secondary-color: #66c0f4;
+        --accent-color: #c7d5e0;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+    }
+
+    body {
+        background-color: var(--primary-color);
+        color: white;
+    }
+
+    .header {
+        background-color: rgba(0,0,0,0.3);
+        padding: 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .logo {
+        font-size: 2rem;
+        color: var(--secondary-color);
+    }
+
+    .header-controls {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .wallet {
+        background-color: rgba(255,255,255,0.1);
+        padding: 0.5rem 1rem;
+        border-radius: 3px;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.9rem;
+    }
+
+    .wallet-icon {
+        font-size: 1.2rem;
+    }
+
+    .wallet-amount {
+        color: var(--secondary-color);
+        font-weight: bold;
+    }
+
+    .discord-button {
+        background-color: #7289DA;
+        padding: 0.5rem 1rem;
+        border-radius: 3px;
+        text-decoration: none;
+        color: white;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: background-color 0.2s;
+    }
+
+    .discord-button:hover {
+        background-color: #677BC4;
+    }
+
+    .steam-login {
+        background-color: #000;
+        padding: 0.5rem 1rem;
+        border-radius: 3px;
+        text-decoration: none;
+        color: white;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .main-content {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+    }
+
+    .tabs {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    .tab-button {
+        background-color: rgba(255,255,255,0.1);
+        border: none;
+        padding: 0.5rem 1rem;
+        color: white;
+        cursor: pointer;
+        border-radius: 3px;
+    }
+
+    .tab-button.active {
+        background-color: var(--secondary-color);
+    }
+
+    .tab-content {
+        display: none;
+    }
+
+    .tab-content.active {
+        display: block;
+    }
+
+    .section-title {
+        width: 100%;
+        text-align: center;
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        color: var(--secondary-color);
+    }
+
+    .coins-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    .coin-package {
+        background-color: rgba(255,255,255,0.1);
+        padding: 1rem;
+        border-radius: 5px;
+        text-align: center;
+        transition: transform 0.2s;
+    }
+
+    .coin-package:hover {
+        transform: translateY(-5px);
+        background-color: rgba(255,255,255,0.2);
+    }
+
+    .package-amount {
+        font-size: 1.2rem;
+        color: var(--accent-color);
+        margin-bottom: 0.5rem;
+    }
+
+    .package-price {
+        font-size: 1.5rem;
+        color: var(--secondary-color);
+        margin-bottom: 1rem;
+    }
+
+    .buy-button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 0.5rem 1rem;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
+
+    .buy-button:hover {
+        background-color: #45a049;
+    }
+
+    .paypal-button {
+        background-color: #0070ba;
+    }
+
+    .paypal-button:hover {
+        background-color: #005ea6;
+    }
+
+    .vip-details {
+        display: inline-block;
+        vertical-align: top;
+        width: calc(25% - 1rem);  /* 25% width for 4 packages with some gap */
+        margin: 0.5rem;
+        background-color: rgba(255,255,255,0.1);
+        border-radius: 5px;
+        padding: 1rem;
+        min-height: 400px;  /* Fixed height to align boxes */
+    }
+
+    /* Adjust container for horizontal layout */
+    #home {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+    }
+
+    .vip-details h3 {
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+    }
+
+    .vip-details ul {
+        list-style-position: inside;
+        padding: 0;
+        font-size: 0.9rem;
+    }
+
+    .vip-details ul li {
+        margin-bottom: 0.5rem;
+    }
+
+    /* Adjust button positioning */
+    .vip-details .buy-button {
+        position: static;
+        margin-top: 1rem;
+        width: 100%;
+    }
+    
+    /* Add styles for new Information tab */
+    .info-content {
+        padding: 2rem;
+        background-color: rgba(255,255,255,0.1);
+        border-radius: 5px;
+        margin-bottom: 2rem;
+    }
+
+    .important-notice {
+        background-color: rgba(255, 255, 0, 0.1);
+        padding: 1rem;
+        border-radius: 5px;
+        margin-bottom: 2rem;
+        border-left: 4px solid var(--secondary-color);
+    }
+
+    .credits-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1rem;
+    }
+
+    .credit-package {
+        background-color: rgba(255,255,255,0.1);
+        padding: 1rem;
+        border-radius: 5px;
+        text-align: center;
+    }
+
+    .server-select {
+        width: 100%;
+        padding: 0.5rem;
+        margin: 1rem 0;
+        background-color: rgba(255,255,255,0.2);
+        color: white;
+        border: 1px solid var(--secondary-color);
+        border-radius: 3px;
+    }
+
+    .server-select option {
+        background-color: var(--primary-color);
+    }
+
+    /* Add server select to existing package styles */
+    .coin-package select,
+    .vip-details select {
+        width: 100%;
+        padding: 0.5rem;
+        margin: 1rem 0;
+        background-color: rgba(255,255,255,0.2);
+        color: white;
+        border: 1px solid var(--secondary-color);
+        border-radius: 3px;
+    }
+</style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">ColaTeam Store</div>
+        <div class="header-controls">
+            <div class="wallet">
+                <span class="wallet-icon">💵</span>
+                <span class="wallet-amount">0</span> ColaCoins
+            </div>
+            <a href="https://discord.gg/colateam" class="discord-button" target="_blank">
+                <i class="fab fa-discord"></i>
+                Join Discord
+            </a>
+            <a href="https://steamcommunity.com/openid/login" class="steam-login">
+                <i class="fab fa-steam"></i>
+                Login with Steam
+            </a>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="tabs">
+            <button class="tab-button active" data-tab="info">Information</button>
+            <button class="tab-button" data-tab="coins">Cola Coins</button>
+            <button class="tab-button" data-tab="home">VIP</button>
+        </div>
+
+        <div id="info" class="tab-content active">
+            <h2 class="section-title">CREDITS IN GAME</h2>
+            <div class="info-content">
+                <div class="important-notice">
+                    IMPORTANT: This purchase is for a single server. You must choose which server you want to receive the credits on.
+                    With the credits, you can buy in-game items, skins, weapons, features, and much more on the server.
+                </div>
+                <div class="credits-grid">
+                    <div class="credit-package">
+                        <div class="package-amount">1500 Credits</div>
+                        <div class="package-price">250 ColaCoins</div>
+                        <select class="server-select">
+                            <option>Select Server</option>
+                            <option>Zombie Escape</option>
+                        </select>
+                        <button class="buy-button">Purchase with ColaCoins</button>
+                    </div>
+                    <div class="credit-package">
+                        <div class="package-amount">5500 Credits</div>
+                        <div class="package-price">800 ColaCoins</div>
+                        <select class="server-select">
+                            <option>Select Server</option>
+                            <option>Zombie Escape</option>
+                        </select>
+                        <button class="buy-button">Purchase with ColaCoins</button>
+                    </div>
+                    <div class="credit-package">
+                        <div class="package-amount">11500 Credits</div>
+                        <div class="package-price">1400 ColaCoins</div>
+                        <select class="server-select">
+                            <option>Select Server</option>
+                            <option>Zombie Escape</option>
+                        </select>
+                        <button class="buy-button">Purchase with ColaCoins</button>
+                    </div>
+                    <div class="credit-package">
+                        <div class="package-amount">22000 Credits</div>
+                        <div class="package-price">2300 ColaCoins</div>
+                        <select class="server-select">
+                            <option>Select Server</option>
+                            <option>Zombie Escape</option>
+                        </select>
+                        <button class="buy-button">Purchase with ColaCoins</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="coins" class="tab-content">
+            <h2 class="section-title">Buy Cola Coins</h2>
+            <div class="coins-grid">
+                <div class="coin-package">
+                    <div class="package-amount">💵 550 ColaCoins</div>
+                    <div class="package-price">€2.49</div>
+                    <button class="buy-button paypal-button">
+                        <i class="fab fa-paypal"></i> Pay with PayPal
+                    </button>
+                </div>
+                <div class="coin-package">
+                    <div class="package-amount">💵 1200 ColaCoins</div>
+                    <div class="package-price">€4.99</div>
+                    <button class="buy-button paypal-button">
+                        <i class="fab fa-paypal"></i> Pay with PayPal
+                    </button>
+                </div>
+                <div class="coin-package">
+                    <div class="package-amount">💵 2550 ColaCoins</div>
+                    <div class="package-price">€9.99</div>
+                    <button class="buy-button paypal-button">
+                        <i class="fab fa-paypal"></i> Pay with PayPal
+                    </button>
+                </div>
+                <div class="coin-package">
+                    <div class="package-amount">💵 3900 ColaCoins</div>
+                    <div class="package-price">€14.99</div>
+                    <button class="buy-button paypal-button">
+                        <i class="fab fa-paypal"></i> Pay with PayPal
+                    </button>
+                </div>
+                <div class="coin-package">
+                    <div class="package-amount">💵 5450 ColaCoins</div>
+                    <div class="package-price">€19.99</div>
+                    <button class="buy-button paypal-button">
+                        <i class="fab fa-paypal"></i> Pay with PayPal
+                    </button>
+                </div>
+                <div class="coin-package">
+                    <div class="package-amount">💵 8350 ColaCoins</div>
+                    <div class="package-price">€29.99</div>
+                    <button class="buy-button paypal-button">
+                        <i class="fab fa-paypal"></i> Pay with PayPal
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="home" class="tab-content">
+            <h2 class="section-title">VIP Benefits Overview</h2>
+            <div class="vip-details">
+                <h3>🥉 VIP BRONZE - 550 ColaCoins</h3>
+                <ul>
+                    <li>Available Skins:</li>
+                    <li>[VIP] Lifuguanghui</li>
+                    <li>[VIP] Laffy</li>
+                    <li>[VIP] Serena</li>
+                    <li>[VIP] Origami</li>
+                    <li>Select 1 knife skin</li>
+                    <li>Select 1 weapon skin</li>
+                </ul>
+                <button class="buy-button">Purchase with ColaCoins</button>
+            </div>
+
+            <div class="vip-details">
+                <h3>🥈 VIP SILVER - 900 ColaCoins</h3>
+                <ul>
+                    <li>Available Skins:</li>
+                    <li>All BRONZE skins plus:</li>
+                    <li>[VIP] Yoll</li>
+                    <li>[VIP] HSR Acheron</li>
+                    <li>[VIP] Illustrious Plus</li>
+                    <li>[VIP] Huohuo</li>
+                    <li>Select 2 knife skins</li>
+                    <li>Select 3 weapon skins</li>
+                </ul>
+                <button class="buy-button">Purchase with ColaCoins</button>
+            </div>
+
+            <div class="vip-details">
+                <h3>🥇 VIP GOLD - 1300 ColaCoins</h3>
+                <ul>
+                    <li>Access to all [VIP] Skins</li>
+                    <li>Select 3 knife skins</li>
+                    <li>Select 6 weapon skins</li>
+                </ul>
+                <button class="buy-button">Purchase with ColaCoins</button>
+            </div>
+
+            <div class="vip-details">
+                <h3>🏅 VIP COLA - 1800 ColaCoins</h3>
+                <ul>
+                    <li>Free access to the entire store</li>
+                    <li>Access to future exclusive content</li>
+                </ul>
+                <button class="buy-button">Purchase with ColaCoins</button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.querySelectorAll('.tab-button').forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons and contents
+                document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+                
+                // Add active class to clicked button and corresponding content
+                button.classList.add('active');
+                const tabId = button.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+
+        document.querySelectorAll('.paypal-button').forEach(button => {
+            button.addEventListener('click', function() {
+                const amount = this.closest('.coin-package').querySelector('.package-price').textContent;
+                alert(`PayPal payment simulation for ${amount}`);
+            });
+        });
+
+        document.querySelectorAll('.vip-details .buy-button').forEach(button => {
+            button.addEventListener('click', function() {
+                const price = this.closest('.vip-details').querySelector('h3').textContent.split('-')[1].trim();
+                alert(`VIP package purchase simulation for ${price}`);
+            });
+        });
+
+        document.querySelectorAll('.credit-package .buy-button').forEach(button => {
+            button.addEventListener('click', function() {
+                const serverSelect = this.closest('.credit-package').querySelector('.server-select');
+                const credits = this.closest('.credit-package').querySelector('.package-amount').textContent;
+                const price = this.closest('.credit-package').querySelector('.package-price').textContent;
+                
+                if (serverSelect.value === 'Select Server') {
+                    alert('Please select a server first!');
+                    return;
+                }
+                
+                alert(`Purchase simulation: ${credits} for ${price} on ${serverSelect.value} server`);
+            });
+        });
+
+        document.querySelectorAll('.server-select').forEach(select => {
+            select.addEventListener('change', function() {
+                const selectedServer = this.value;
+                if (selectedServer) {
+                    console.log(`Server selected: ${selectedServer}`);
+                }
+            });
+        });
+
+        document.querySelector('.steam-login').addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('Steam login simulation initiated');
+        });
+    </script>
+</body>
+</html>
